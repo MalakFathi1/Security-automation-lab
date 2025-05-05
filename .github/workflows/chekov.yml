@@ -1,1 +1,26 @@
+name: IAC Scan with Trivy
 
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  iac-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Run Trivy on IaC folder (e.g., `infra/`)
+      - name: Trivy IaC scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          scan-ref: './IAC'  # <- Specify your IaC directory here
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
