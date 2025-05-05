@@ -11,14 +11,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-# 1. Checkout the code
-# 2. Instal docker buildx  docker/setup-buildx-action@v3
-# 3. Build the docker image
-# 4. Scan with trivy the built image
+      # 1. Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Build an image from Dockerfile
-        run: docker build -t docker.io/my-organization/my-app:${{ github.sha }} .
+
+      # 2. Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 3. Log in to GitHub Container Registry (optional if pushing to GHCR)
+      # Uncomment and configure if you want to push the image somewhere
+      # - name: Log in to GitHub Container Registry
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+
+      # 4. Build the Docker image (but do not push)
+      - name: Build Docker image
+        run: |
+          docker build -t my-app:latest .
+
+      # 5. Scan the image using Trivy
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'my-app:latest'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
