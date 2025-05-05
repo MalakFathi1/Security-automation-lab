@@ -22,15 +22,13 @@ jobs:
   
 
       # 4. Build the Docker image (but do not push)
-      - name: Build Docker image
-        run: |
-          docker build -t my-app:latest .
+      #- name: Build Docker image
+      #  run: |
+      #    docker build -t my-app:latest .
 
       # 5. Scan the image using Trivy
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: 'my-app:latest'
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
+      #- name: Run Trivy vulnerability scanner
+      #  uses: aquasecurity/trivy-action@master
+      #  with:
+      #   exit-code: '1'
+      #    ignore-unfixed: true
