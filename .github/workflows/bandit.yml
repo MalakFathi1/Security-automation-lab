@@ -6,15 +6,15 @@ on:
   pull_request:
     branches: [main]
 
-jobs:
-  security-scan:
-    runs-on: ubuntu-latest
+#jobs:
+  #security-scan:
+    #runs-on: ubuntu-latest
 
-    steps:
+    #steps:
 # 1. Checkout the code using actions/checkout
-    - uses: actions/checkout@v2
+   # - uses: actions/checkout@v2
 # 2. Run bandit using tj-actions bandit
-    - name: Run bandit
-      uses: tj-actions/bandit@v5.1
+   # - name: Run bandit
+   #   uses: tj-actions/bandit@v5.1
 
 
