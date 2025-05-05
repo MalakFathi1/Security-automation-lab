@@ -16,3 +16,9 @@ jobs:
 # 2. Instal docker buildx  docker/setup-buildx-action@v3
 # 3. Build the docker image
 # 4. Scan with trivy the built image
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build an image from Dockerfile
+        run: docker build -t docker.io/my-organization/my-app:${{ github.sha }} .
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
